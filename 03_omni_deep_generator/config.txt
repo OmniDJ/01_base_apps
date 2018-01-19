@@ -1,0 +1,4 @@
+{
+  "BASE_FOLDER": "GoogleDrive",
+  "APP_FOLDER": "_omnidj_data/03_deep_generator"
+}

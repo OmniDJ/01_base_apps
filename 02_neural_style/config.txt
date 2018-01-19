@@ -1,0 +1,6 @@
+{
+  "BASE_FOLDER": "GoogleDrive",
+  "APP_FOLDER": "_omnidj_data/01_neural_styler",
+
+  "TF_MODEL" : "imagenet-vgg-verydeep-19.mat" 
+}
