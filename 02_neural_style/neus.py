@@ -138,8 +138,9 @@ class NeuralStyler:
                style_layer_weights = None, 
                epochs = 1, nr_iters = 20,
                clear_session = True, 
-               DEBUG = True):
-    
+               DEBUG = True,
+               title=''):
+    self.title=title
     self.DEBUG = DEBUG
 
     self.logger = load_module('logger','logger.py').Logger(
@@ -746,8 +747,8 @@ class NeuralStyler:
                      # Playing with the following hyperparameters will achieve new effects
                      style_template = INCEPTION_V3_STYLING_TEMPLATE,
                      step = 0.01,  # Gradient ascent step size
-                     num_octave = 3,  # Number of scales at which to run gradient ascent
-                     octave_scale = 1.4,  # Size ratio between scales
+                     num_octave = 5,  # Number of scales at which to run gradient ascent
+                     octave_scale = 1.25,  # Size ratio between scales
                      iterations = 20,  # Number of ascent steps per scale
                      max_loss = 10.,
                      ):
@@ -819,7 +820,7 @@ class NeuralStyler:
     self.log("Done processing image for dd styling in {:.2f}s".format(tmra))
     
     final_img = self._k_dd_deprocess_image(np.copy(img))
-    self.logger.OutputImage(final_img, label = 'keras_dd')    
+    self.logger.OutputImage(final_img, label = 'keras_dd'+self.title)    
     return final_img
   
   def generate_dream(self, np_img):
@@ -844,6 +845,8 @@ if __name__ == '__main__':
   np_cont = io.imread('cont.png')
   np_style = io.imread('style.png')
   
+  images=['selfie.jpg']
+  
   if tests[test] == 'TRANSFER':
     methods = ['tf', 'keras']  
     for method in methods:
@@ -861,9 +864,13 @@ if __name__ == '__main__':
       plt.imshow(np_output)  
       plt.show()
   else:
-    neus_gen = NeuralStyler(epochs = 1,
-                            method = 'keras')    
-    np_output = neus_gen.generate_dream(np_cont)
-    plt.imshow(np_output)  
-    plt.show()
+    for img in images:
+      np_cont = io.imread(img)
+      
+      neus_gen = NeuralStyler(epochs = 1,
+                              method = 'keras',
+                              title=img)    
+      np_output = neus_gen.generate_dream(np_cont)
+      plt.imshow(np_output)  
+      plt.show()
     
