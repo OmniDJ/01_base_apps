@@ -43,15 +43,6 @@ def fr_triplet_loss(X, alpha = 0.2):
   """
   computes triple loss. this loss function will NOT be used in model.compile
   returns scalar valued tensor
-  
-    # Step 1: Compute the (encoding) distance between the anchor and the positive, you will need to sum over axis=-1
-    pos_dist = tf.reduce_sum(tf.square(anchor-positive), axis = -1)
-    # Step 2: Compute the (encoding) distance between the anchor and the negative, you will need to sum over axis=-1
-    neg_dist = tf.reduce_sum(tf.square(anchor-negative), axis = -1)
-    # Step 3: subtract the two previous distances and add alpha.
-    basic_loss = tf.add(tf.subtract(pos_dist, neg_dist), alpha)
-    # Step 4: Take the maximum of basic_loss and 0.0. Sum over the training examples.
-    loss = tf.reduce_sum(tf.maximum(basic_loss, 0))  
   """
   anchor, positive, negative = X
   dist_pos = K.sum(K.square(anchor - positive), axis = -1)
